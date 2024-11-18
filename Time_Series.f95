@@ -46,12 +46,13 @@ program main
             x12=x12+x(j)
             y12=y12+x(j+1)
         end do
-		!if (i >= 3640000 .and. i <=3642000)	then
-		! do j=1,N,3
-		!  write(12,'(2G17.8,1x,i4)') x(j), t, (j/3)+1
-		!  if (t .gt. 356265.00D0 .and. t .lt. 356266.01D0) write (14,'(3G17.8)') x(j), (j/3)+1, t	
-		! enddo 
-		!endif  
+	!Spatio-Temporal data
+		if (i >= 3640000 .and. i <=3642000)	then
+		 do j=1,N,3
+		  write(12,'(2G17.8,1x,i4)') x(j), t, (j/3)+1
+		  if (t .gt. 356265.00D0 .and. t .lt. 356266.01D0) write (14,'(3G17.8)') x(j), (j/3)+1, t	
+		 enddo 
+		endif  
         x21(i)=x12/(num)
         x12avg=x12/(num)
         y12=y12/(num)
@@ -64,29 +65,30 @@ program main
 		  !end do
         end if     
     end do
-    !m=0
-    !do k=100000000,steps,1
-    !    m=m+x21(k)
-    !end do
-    !mean=m/steps
-    !print*,"Mean=",mean
-    !s=0
-    !do k=100000000,steps,1
-    !    s=s+(x21(k)-mean)**2
-    !end do
+    !Threshold Calculation
+    m=0
+    do k=100000000,steps,1
+        m=m+x21(k)
+    end do
+    mean=m/steps
+    print*,"Mean=",mean
+    s=0
+    do k=100000000,steps,1
+        s=s+(x21(k)-mean)**2
+    end do
 
-    !sd=sqrt(s/steps)
-    !print*,"sd=",sd
-    !te=mean+6*sd
-    !print*, "TE=",te
-    !te1=mean-6*sd
-    !print*,"TE1=",te1
-    !count1=0
-    !do k=100000000,steps,1
-    !    if (x21(k)>te) then
-    !        count1=count1+1
-    !    end if
-    !end do
+    sd=sqrt(s/steps)
+    print*,"sd=",sd
+    te=mean+6*sd
+    print*, "TE=",te
+    te1=mean-6*sd
+    !rint*,"TE1=",te1
+    count1=0
+    do k=100000000,steps,1
+        if (x21(k)>te) then
+            count1=count1+1
+        end if
+    end do
     !WRITE(13,*) rlz, count1 
 !ENDDO    
 
